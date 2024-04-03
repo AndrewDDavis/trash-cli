@@ -1,15 +1,12 @@
-import logging
 import os.path
-from pprint import pprint
-from traceback import format_exception
 from typing import NamedTuple
 
-from trashcli.put.core.either import Either, Right, Left
+from trashcli.put.core.either import Either
+from trashcli.put.core.either import Left
+from trashcli.put.core.either import Right
 from trashcli.put.core.failure_reason import FailureReason
 from trashcli.put.core.failure_reason import LogContext
 from trashcli.put.fs.fs import Fs
-from trashcli.put.janitor_tools.info_creator import \
-    TrashInfoCreator
 from trashcli.put.janitor_tools.info_file_persister import TrashedFile
 
 
@@ -27,10 +24,8 @@ class UnableToMoveFileToTrash(NamedTuple('UnableToMoveFileToTrash', [
 class PutTrashDir:
     def __init__(self,
                  fs,  # type: Fs
-                 info_dir2,  # type: TrashInfoCreator
                  ):
         self.fs = fs
-        self.info_dir2 = info_dir2
 
     def try_trash(self,
                   path,  # type: str

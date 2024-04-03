@@ -12,11 +12,10 @@ class TestAlternateTrashDir(Setup):
     def test_should_list_contents_of_alternate_trashdir(self):
         self.user.set_fake_uid(123)
         self.user.add_volume(self.top_dir)
-        self.top_trashdir2 = FakeTrashDir(self.top_dir / '.Trash-123')
-        self.top_trashdir2.add_trashinfo2('file', datetime(2000, 1, 1, 0, 0, 0))
+        self.user.add_trashinfo(self.top_dir / '.Trash-123', 'file',
+                                "2000-01-01")
 
-        self.user.run_trash_list()
+        output = self.user.run_trash_list()
 
         assert_equals_with_unidiff("2000-01-01 00:00:00 %s/file\n" %
-                                   self.top_dir,
-                                   self.user.output())
+                                   self.top_dir, output.stdout)
